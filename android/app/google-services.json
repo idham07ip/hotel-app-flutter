@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "633741433311",
+    "project_id": "db-hotel-app",
+    "storage_bucket": "db-hotel-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633741433311:android:4c784fceb53238dd98cc6a",
+        "android_client_info": {
+          "package_name": "com.drexapp.hotel_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633741433311-v6ku3gqsu1b21sfu1ft2kcfjb06e0933.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDL9i5GVXsaGMiwJJ7MvN12FMTbmXM1fHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "633741433311-v6ku3gqsu1b21sfu1ft2kcfjb06e0933.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
