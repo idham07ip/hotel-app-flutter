@@ -1,8 +1,10 @@
 import 'dart:convert';
+
 import 'package:get/get.dart';
-import 'package:hotel_app/controller/c_user.dart';
-import 'package:hotel_app/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../controller/c_user.dart';
+import '../model/user.dart';
 
 class AppSession {
   static Future<bool> saveUser(User user) async {
@@ -18,7 +20,7 @@ class AppSession {
   }
 
   static Future<User> getUser() async {
-    User user = User();
+    User user = User(); // default value
     final pref = await SharedPreferences.getInstance();
     String? stringUser = pref.getString('user');
     if (stringUser != null) {
