@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+import 'package:get/get.dart';
 import 'package:hotel_app/config/app_session.dart';
 
 import '../model/user.dart';
@@ -16,8 +17,8 @@ class UserSource {
       response['success'] = true;
       response['message'] = 'Sign In Success';
       String uid = credential.user!.uid;
-      User user = await getWhereId(uid);
-      AppSession.saveUser(user);
+      User? user = await getWhereId(uid);
+      AppSession.saveUser(user!);
     } on auth.FirebaseAuthException catch (e) {
       response['success'] = false;
 
@@ -32,10 +33,10 @@ class UserSource {
     return response;
   }
 
-  static Future<User> getWhereId(String id) async {
+  static Future<User?> getWhereId(String id) async {
     DocumentReference<Map<String, dynamic>> ref =
-        FirebaseFirestore.instance.collection('user').doc(id);
+        FirebaseFirestore.instance.collection('User').doc(id);
     DocumentSnapshot<Map<String, dynamic>> doc = await ref.get();
-    return User.fromJson(doc.data()!);
+    return User?.fromJson(doc.data()!);
   }
 }

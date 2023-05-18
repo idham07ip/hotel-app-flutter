@@ -11,7 +11,7 @@ class AppSession {
     final pref = await SharedPreferences.getInstance();
     Map<String, dynamic> mapUser = user.toJson();
     String stringUser = jsonEncode(mapUser);
-    bool success = await pref.setString('user', stringUser);
+    bool success = await pref.setString('User', stringUser);
     if (success) {
       final cUser = Get.put(CUser());
       cUser.setData(user);
@@ -22,7 +22,7 @@ class AppSession {
   static Future<User> getUser() async {
     User user = User(); // default value
     final pref = await SharedPreferences.getInstance();
-    String? stringUser = pref.getString('user');
+    String? stringUser = pref.getString('User');
     if (stringUser != null) {
       Map<String, dynamic> mapUser = jsonDecode(stringUser);
       user = User.fromJson(mapUser);
@@ -34,7 +34,7 @@ class AppSession {
 
   static Future<bool> clearUser() async {
     final pref = await SharedPreferences.getInstance();
-    bool success = await pref.remove('user');
+    bool success = await pref.remove('User');
     final cUser = Get.put(CUser());
     cUser.setData(User());
     return success;
