@@ -12,6 +12,8 @@ import 'package:hotel_app/page/intro_page.dart';
 import 'package:hotel_app/page/sign_in_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import 'page/detail_hotel_page.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
         AppRoute.intro: (context) => const IntroPage(),
         AppRoute.home: (context) => HomePage(),
         AppRoute.signIn: (context) => SignInPage(),
-        AppRoute.detail: (context) => const IntroPage(),
+        AppRoute.detail: (context) => DetailHotelPage(),
         AppRoute.checkout: (context) => const IntroPage(),
         AppRoute.checkoutSuccess: (context) => const IntroPage(),
         AppRoute.detailBooking: (context) => const IntroPage(),
