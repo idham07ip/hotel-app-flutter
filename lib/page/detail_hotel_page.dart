@@ -4,6 +4,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hotel_app/config/app_asset.dart';
 import 'package:hotel_app/config/app_color.dart';
 import 'package:hotel_app/config/app_format.dart';
+import 'package:hotel_app/config/app_route.dart';
 import 'package:hotel_app/controller/c_user.dart';
 import 'package:hotel_app/model/booking.dart';
 import 'package:hotel_app/model/hotel.dart';
@@ -206,7 +207,9 @@ class DetailHotelPage extends StatelessWidget {
           //Button
           ButtonCustom(
             label: 'Booking Now',
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, AppRoute.checkout, arguments: hotel);
+            },
           ),
         ],
       ),
