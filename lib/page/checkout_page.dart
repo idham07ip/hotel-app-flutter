@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hotel_app/config/app_asset.dart';
+import 'package:hotel_app/config/app_color.dart';
 import 'package:hotel_app/config/app_format.dart';
 import 'package:hotel_app/controller/c_user.dart';
 import 'package:hotel_app/model/hotel.dart';
+import 'package:hotel_app/widget/button_custom.dart';
 
 class CheckoutPage extends StatelessWidget {
   CheckoutPage({super.key});
@@ -33,6 +36,73 @@ class CheckoutPage extends StatelessWidget {
           const SizedBox(height: 16),
           roomDetails(context),
           const SizedBox(height: 16),
+          paymentMethods(context),
+          const SizedBox(height: 20),
+          ButtonCustom(
+            label: 'Proceed to Payment',
+            isExpand: true,
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container paymentMethods(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Payment Method',
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Image.asset(AppAsset.iconMasterCard, width: 50),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Cucung Sukardi',
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      Text(
+                        'Balance ${AppFormat.currency(25000)}',
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(
+                  Icons.check_circle,
+                  color: AppColor.secondaryColor,
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
