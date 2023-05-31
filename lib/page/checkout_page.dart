@@ -3,9 +3,13 @@ import 'package:get/get.dart';
 import 'package:hotel_app/config/app_asset.dart';
 import 'package:hotel_app/config/app_color.dart';
 import 'package:hotel_app/config/app_format.dart';
+import 'package:hotel_app/config/app_route.dart';
 import 'package:hotel_app/controller/c_user.dart';
+import 'package:hotel_app/model/booking.dart';
 import 'package:hotel_app/model/hotel.dart';
+import 'package:hotel_app/source/booking_source.dart';
 import 'package:hotel_app/widget/button_custom.dart';
+import 'package:intl/intl.dart';
 
 class CheckoutPage extends StatelessWidget {
   CheckoutPage({super.key});
@@ -41,7 +45,30 @@ class CheckoutPage extends StatelessWidget {
           ButtonCustom(
             label: 'Proceed to Payment',
             isExpand: true,
-            onTap: () {},
+            onTap: () {
+              bookingSource.tambahBooking(
+                controllerUser.data.id!,
+                Booking(
+                  id: '',
+                  idHotel: hotel.id,
+                  cover: hotel.cover,
+                  name: hotel.name,
+                  location: hotel.location,
+                  date: DateFormat('yyyy-MMMM-dd').format(DateTime.now()),
+                  guest: 1,
+                  breakfast: 'Included',
+                  checkInTime: '14.00 WIB',
+                  night: 2,
+                  serviceFee: 6,
+                  activities: 40,
+                  totalPayment: hotel.price + 2 + 6 + 40,
+                  status: 'PAID',
+                  isDone: false,
+                ),
+              );
+              Navigator.pushNamed(context, AppRoute.checkoutSuccess,
+                  arguments: hotel);
+            },
           ),
         ],
       ),
