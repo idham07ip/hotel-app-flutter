@@ -11,21 +11,21 @@ import 'package:hotel_app/source/booking_source.dart';
 import 'package:hotel_app/widget/button_custom.dart';
 import 'package:intl/intl.dart';
 
-class CheckoutPage extends StatelessWidget {
-  CheckoutPage({super.key});
+class DetailBooking extends StatelessWidget {
+  DetailBooking({super.key});
 
   final controllerUser = Get.put(CUser());
 
   @override
   Widget build(BuildContext context) {
-    Hotel hotel = ModalRoute.of(context)!.settings.arguments as Hotel;
+    Booking booking = ModalRoute.of(context)!.settings.arguments as Booking;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
-        title: Text(
-          'Checkout Hotels',
+        title: const Text(
+          'Detail Booking',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -36,40 +36,12 @@ class CheckoutPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          headersHotel(hotel, context),
+          headersHotel(booking, context),
           const SizedBox(height: 16),
-          roomDetails(context),
+          roomDetails(booking, context),
           const SizedBox(height: 16),
           paymentMethods(context),
           const SizedBox(height: 20),
-          ButtonCustom(
-            label: 'Proceed to Payment',
-            isExpand: true,
-            onTap: () {
-              bookingSource.tambahBooking(
-                controllerUser.data.id!,
-                Booking(
-                  id: '',
-                  idHotel: hotel.id,
-                  cover: hotel.cover,
-                  name: hotel.name,
-                  location: hotel.location,
-                  date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-                  guest: 1,
-                  breakfast: 'Included',
-                  checkInTime: '14.00 WIB',
-                  night: 2,
-                  serviceFee: 6,
-                  activities: 40,
-                  totalPayment: hotel.price + 2 + 6 + 40,
-                  status: 'PAID',
-                  isDone: false,
-                ),
-              );
-              Navigator.pushNamed(context, AppRoute.checkoutSuccess,
-                  arguments: hotel);
-            },
-          ),
         ],
       ),
     );
@@ -135,7 +107,7 @@ class CheckoutPage extends StatelessWidget {
     );
   }
 
-  Container roomDetails(BuildContext context) {
+  Container roomDetails(Booking booking, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -152,25 +124,25 @@ class CheckoutPage extends StatelessWidget {
                 ),
           ),
           const SizedBox(height: 16),
+          itemRoomDetail(context, 'Date', AppFormat.date(booking.date)),
+          const SizedBox(height: 8),
+          itemRoomDetail(context, 'Guest', '${booking.guest} Guests'),
+          const SizedBox(height: 8),
+          itemRoomDetail(context, 'Breakfast', booking.breakfast),
+          const SizedBox(height: 8),
+          itemRoomDetail(context, 'Check-In Time', booking.checkInTime),
+          const SizedBox(height: 8),
           itemRoomDetail(
-            context,
-            'Date',
-            AppFormat.date(DateTime.now().toIso8601String()),
-          ),
+              context, '${booking.night} Night', AppFormat.currency(12900)),
           const SizedBox(height: 8),
-          itemRoomDetail(context, 'Guest', '2 Guests'),
+          itemRoomDetail(context, 'Service Fee',
+              AppFormat.currency(booking.serviceFee.toDouble())),
           const SizedBox(height: 8),
-          itemRoomDetail(context, 'Breakfast', 'Included'),
+          itemRoomDetail(context, 'Activities',
+              AppFormat.currency(booking.activities.toDouble())),
           const SizedBox(height: 8),
-          itemRoomDetail(context, 'Check-In Time', '14:00 WIB'),
-          const SizedBox(height: 8),
-          itemRoomDetail(context, '1 Night', AppFormat.currency(12900)),
-          const SizedBox(height: 8),
-          itemRoomDetail(context, 'Service Fee', AppFormat.currency(50)),
-          const SizedBox(height: 8),
-          itemRoomDetail(context, 'Activities', AppFormat.currency(350)),
-          const SizedBox(height: 8),
-          itemRoomDetail(context, 'Total Payment', AppFormat.currency(13550)),
+          itemRoomDetail(context, 'Total Payment',
+              AppFormat.currency(booking.totalPayment.toDouble())),
           const SizedBox(height: 8),
         ],
       ),
@@ -195,7 +167,7 @@ class CheckoutPage extends StatelessWidget {
     );
   }
 
-  Container headersHotel(Hotel hotel, BuildContext context) {
+  Container headersHotel(Booking booking, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -207,7 +179,7 @@ class CheckoutPage extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.network(
-              hotel.cover,
+              booking.cover,
               fit: BoxFit.cover,
               height: 70,
               width: 90,
@@ -219,13 +191,13 @@ class CheckoutPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  hotel.name,
+                  booking.name,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 Text(
-                  hotel.location,
+                  booking.location,
                   style: const TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.w300,

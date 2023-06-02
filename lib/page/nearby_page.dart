@@ -5,6 +5,7 @@ import 'package:hotel_app/config/app_asset.dart';
 import 'package:hotel_app/config/app_color.dart';
 import 'package:hotel_app/config/app_format.dart';
 import 'package:hotel_app/config/app_route.dart';
+import 'package:hotel_app/config/app_session.dart';
 import 'package:hotel_app/controller/c_nearby.dart';
 import 'package:hotel_app/model/hotel.dart';
 
@@ -295,13 +296,31 @@ class NearbyPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Image.asset(
-              AppAsset.profile,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              showMenu(
+                  context: context,
+                  position: const RelativeRect.fromLTRB(16, 16, 0, 0),
+                  items: [
+                    const PopupMenuItem(
+                      child: Text('Logout'),
+                      value: 'logout',
+                    ),
+                  ]).then((value) {
+                if (value == 'logout') {
+                  AppSession.clearUser();
+                  Navigator.pushReplacementNamed(context, AppRoute.signIn);
+                }
+              });
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                AppAsset.profile,
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
 
@@ -315,13 +334,15 @@ class NearbyPage extends StatelessWidget {
                       fontWeight: FontWeight.w900,
                     ),
               ),
-              const Text(
-                '100 Hotels',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12,
-                ),
-              )
+              Obx(() {
+                return Text(
+                  '${controllerNearby.listHotel.length} Hotels',
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                );
+              })
             ],
           )
         ],
